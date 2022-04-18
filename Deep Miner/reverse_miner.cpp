@@ -6,11 +6,21 @@
 void reverse_miner::mine(vector<int>& zmine)
 {
 	for (auto iter = zmine.rbegin(); iter != zmine.rend(); iter++) {
-		if (*iter != 0) {
+		if (*iter == -1) {
+			cout << "You mined only rocks. The crystals were worth zero." << endl;
+			return;
+		}
+		if (*iter == -2) {
+			cout << "The ground was too hard to mine, so you moved to another zone." << endl;
+			//maybe std::min_element(first_In_Z, last_In_Z)
+			return;
+		}
+		if (*iter != 0 && *iter != -1 && *iter != -2) {
 			loot += *iter;
 			cout << *iter << " worth of crystals has added to your loot." << endl;
 			*iter = 0;
 			return;
 		}
+		
 	}
 }

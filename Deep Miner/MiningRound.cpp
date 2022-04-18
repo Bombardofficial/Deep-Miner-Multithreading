@@ -7,16 +7,15 @@
 #include "World.h"
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
 Player* MiningRound::mineAndReturnWinner(World& w, Player* first, Player* second)
 {
     vector<Miner*> miners;
     miners.push_back(first->miner);
     miners.push_back(second->miner);
+    system("Color 0E");
     do {
-        // showtable
-        // richtung lesz
-        // mining
-        // csere
+        
         w.show_table(miners);
         string dir = first->richtung();
         first->miner->pos_X = dir[0] - 'A';
@@ -34,7 +33,7 @@ Player* MiningRound::mineAndReturnWinner(World& w, Player* first, Player* second
         second = tmp;
 
     } while (first->miner->loot < 50 && second->miner->loot < 50); //itt is
-
+    system("Color 0A");
     if (second->miner->loot >= 50) {
         cout << second->name << " won!" << endl;
         return second;

@@ -1,5 +1,6 @@
 #include "World.h"
 #include "Miner.h"
+#include <algorithm>
 #include <string>
 
 
@@ -48,6 +49,42 @@ char World::whichminer(int x, int y, vector<Miner*> miners) {
     }
     return ' ';
 }
+
+bool kisebb(int& egyik, int& masik) {
+    return egyik < masik;
+}
+
+bool kisebbVektor(vector<int>& egyik, vector<int>& masik) {
+    return egyik[9] < masik[9];
+}
+
+void World::minElementInTable(Miner *miner)
+{
+    
+    //min_element(table[0], table[8],)
+
+    //vector<int> temp = { 1,2,3,4,5 };
+    //vector<int>::iterator pos = min_element(temp.begin(), temp.end(), kisebb);
+    int x;
+    int y;
+    vector<vector<int> >::iterator smallest = min_element(table[0].begin(), table[0].end(), kisebbVektor);
+    x = 0;
+    y = smallest - table[0].begin();
+    for (size_t i = 1; i < table.size(); i++) {
+        vector< vector <int>> layer = table[i];
+        vector<vector<int> >::iterator found = min_element(layer.begin(), layer.end(), kisebbVektor);
+        if ( (*found)[9] < (*smallest)[9]) {
+            x = i;
+            y = smallest - table[0].begin();
+            smallest = found;
+        }
+    }
+
+    miner->pos_X = x;
+    miner->pos_Y = y;
+}
+
+
 
 
 

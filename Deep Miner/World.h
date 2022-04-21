@@ -15,6 +15,7 @@ public:
 	void show_table(vector<Miner*> miners);
 	char whichminer(int x, int y, vector<Miner*> miners);
 	vector< vector< vector<int> > > table;
+	void minElementInTable(Miner *miner);
 private:
 	int x = 5;
 	int y = 5;

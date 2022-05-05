@@ -7,5 +7,7 @@ public:
 
 	void chooseCast();
 	string richtung();
+	void ifOnX();
+	void ifOnY();
 };
 

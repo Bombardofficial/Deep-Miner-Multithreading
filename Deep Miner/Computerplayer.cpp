@@ -1,5 +1,6 @@
 #include "Computerplayer.h"
-
+#include <chrono>
+#include <thread>
 void Computerplayer::chooseCast()
 {
 	int valasztas = rand() % 3;
@@ -26,6 +27,9 @@ void Computerplayer::chooseCast()
 
 string Computerplayer::richtung()
 {
+	int counter = 0;
+	auto startTime = std::chrono::steady_clock::now(); //für zeitmessung
+
 	char richtungsym = this->miner->pos_X + 'A';
 	int richtungnum = this->miner->pos_Y + 1;
 	
@@ -35,6 +39,7 @@ string Computerplayer::richtung()
 			roll++;
 		}
 		string s;
+		//std::thread th0(ifOnX(), ref(counter));
 		s.push_back((char)(roll + 'A'));
 		s.push_back((char)(richtungnum + '0'));
 		return s;
@@ -49,4 +54,12 @@ string Computerplayer::richtung()
 		s.push_back((char)(roll + '1'));
 		return s;
 	}
+}
+
+void Computerplayer::ifOnX()
+{
+}
+
+void Computerplayer::ifOnY()
+{
 }

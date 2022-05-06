@@ -19,24 +19,47 @@ void Game::start_game()
 	char esc_char = 27;
 	cout << esc_char << "[1m" << "Welcome to the Deep Miner!\n" << esc_char << "[0m" << endl;
 
-	Player* elso;
-	Player* masodik;
-	Player* harmadik;
-	Player* negyedik;
-	Player* otodik;
+	Player* elso = nullptr;
+	Player* masodik = nullptr;
+	Player* harmadik = nullptr;
+	Player* negyedik = nullptr;
+	Player* otodik = nullptr;
 
-	
-	createFirst(elso);
-	createSecond(masodik);
-	createThird(harmadik);
-	createFourth(negyedik);
-	createFifth(otodik);
+	auto startTime = std::chrono::steady_clock::now();
+	std::thread t1 = createFirstThread(elso);
+	std::thread t2 = createSecondThread(masodik);
+	std::thread t3 = createThirdThread(harmadik);
+	std::thread t4 = createFourthThread(negyedik);
+	std::thread t5 = createFifthThread(otodik);
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+	t5.join();
+	auto endTime = std::chrono::steady_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endTime-startTime).count();
+
+	cout << "Elapsed time during creating the bots: " << elapsed << endl << endl;
+
 	do {
-		randFirst(elso);
-		randSecond(masodik);
-		randThird(harmadik);
-		randFourth(negyedik);
-		randFifth(otodik);
+		auto startTimeRand = std::chrono::steady_clock::now();
+		std::thread tr1 = randFirstThread(elso);
+		std::thread tr2 = randSecondThread(masodik);
+		std::thread tr3 = randThirdThread(harmadik);
+		std::thread tr4 = randFourthThread(negyedik);
+		std::thread tr5 = randFifthThread(otodik);
+
+		tr1.join();
+		tr2.join();
+		tr3.join();
+		tr4.join();
+		tr5.join();
+		auto endTimeRand = std::chrono::steady_clock::now();
+		auto elapsedRand = std::chrono::duration_cast<std::chrono::milliseconds>(endTimeRand - startTimeRand).count();
+
+		cout << "Elapsed time during randomizing the position of the bots: " << elapsedRand << endl << endl;
+
 	} while (elso->miner->pos_X == masodik->miner->pos_X 
 		&& elso->miner->pos_X == harmadik->miner->pos_X
 		&& elso->miner->pos_X == negyedik->miner->pos_X
@@ -64,73 +87,89 @@ void Game::start_game()
 	
 }
 
-std::thread Game::createFirst(Player* first)
+void Game::createFirst(Player* first)
 {
+	m.lock();
 	first = new Computerplayer("First Bot");
 
 	first->chooseCast();
-	return std::thread();
+	m.unlock();
+	
 }
 
-std::thread Game::createSecond(Player* second)
+void Game::createSecond(Player* second)
 {
+	m.lock();
 	second = new Computerplayer("First Bot");
 
 	second->chooseCast();
-	
+	m.unlock();
 }
 
-std::thread Game::createThird(Player* third)
+void Game::createThird(Player* third)
 {
+	m.lock();
 	third = new Computerplayer("First Bot");
 
 	third->chooseCast();
-	
+	m.unlock();
 }
 
-std::thread Game::createFourth(Player* fourth)
+void Game::createFourth(Player* fourth)
 {
+	m.lock();
 	fourth = new Computerplayer("First Bot");
 
 	fourth->chooseCast();
-	
+	m.unlock();
 }
 
-std::thread Game::createFifth(Player* fifth)
+void Game::createFifth(Player* fifth)
 {
+	m.lock();
 	fifth = new Computerplayer("First Bot");
 
 	fifth->chooseCast();
-	
+	m.unlock();
 }
 
-std::thread Game::randFirst(Player* first)
+void Game::randFirst(Player* first)
 {
+	m.lock();
 	first->miner->pos_X = rand() % 5;
 	first->miner->pos_Y = rand() % 5;
+	m.unlock();
 }
 
-std::thread Game::randSecond(Player* second)
+void Game::randSecond(Player* second)
 {
+	m.lock();
 	second->miner->pos_X = rand() % 5;
 	second->miner->pos_Y = rand() % 5;
+	m.unlock();
 }
 
-std::thread Game::randThird(Player* third)
+void Game::randThird(Player* third)
 {
+	m.lock();
 	third->miner->pos_X = rand() % 5;
 	third->miner->pos_Y = rand() % 5;
+	m.unlock();
 }
 
-std::thread Game::randFourth(Player* fourth)
+void Game::randFourth(Player* fourth)
 {
+	m.lock();
 	fourth->miner->pos_X = rand() % 5;
 	fourth->miner->pos_Y = rand() % 5;
+	m.unlock();
 }
 
-std::thread Game::randFifth(Player* fifth)
+void Game::randFifth(Player* fifth)
 {
+	m.lock();
 	fifth->miner->pos_X = rand() % 5;
 	fifth->miner->pos_Y = rand() % 5;
+	m.unlock();
 }
 

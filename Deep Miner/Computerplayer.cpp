@@ -39,7 +39,7 @@ string Computerplayer::richtung()
 			roll++;
 		}
 		string s;
-		//std::thread th0(ifOnX(), ref(counter));
+		
 		s.push_back((char)(roll + 'A'));
 		s.push_back((char)(richtungnum + '0'));
 		return s;
@@ -56,10 +56,4 @@ string Computerplayer::richtung()
 	}
 }
 
-void Computerplayer::ifOnX()
-{
-}
 
-void Computerplayer::ifOnY()
-{
-}
